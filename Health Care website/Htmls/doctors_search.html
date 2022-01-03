@@ -1,0 +1,278 @@
+<!-- <!DOCTYPE html> -->
+<html>
+  <style>
+    body{
+        background-image: url(b.jpg);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100% 100%;
+    }
+</style>
+<head>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        * {
+          box-sizing: border-box;
+        }
+        
+        #myInput {
+          background-image: url('/css/searchicon.png');
+          background-position: 10px 12px;
+          background-repeat: no-repeat;
+          width: 100%;
+          font-size: 16px;
+          padding: 12px 20px 12px 40px;
+          border: 1px solid #ddd;
+          margin-bottom: 12px;
+        }
+        
+        #myUL {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+        }
+        
+        #myUL li a {
+          border: 1px solid #ddd;
+          margin-top: -1px; /* Prevent double borders */
+          background-color: #f6f6f6;
+          padding: 12px;
+          text-decoration: none;
+          font-size: 18px;
+          color: black;
+          display: block
+        }
+        
+        #myUL li a:hover:not(.header) {
+          background-color: #eee;
+        }
+        </style>
+        </head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create a column layout with Flexbox */
+.row {
+  display: flex;
+}
+
+/* Left column (menu) */
+.left {
+  flex: 35%;
+  padding: 15px 0;
+}
+
+.left h2 {
+  padding-left: 8px;
+}
+
+/* Right column (page content) */
+.right {
+  flex: 65%;
+  padding: 15px;
+}
+
+/* Style the search box */
+#mySearch {
+  width: 100%;
+  font-size: 18px;
+  padding: 11px;
+  border: 1px solid #ddd;
+}
+
+/* Style the navigation menu inside the left column */
+#myMenu {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myMenu li a {
+  padding: 12px;
+  text-decoration: none;
+  color: black;
+  display: block
+}
+
+#myMenu li a:hover {
+  background-color: #eee;
+}
+</style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="user_profile.html">Go back to my profile</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav>
+<h2>Search for a doctor </h2>
+<div class="row">
+  <div class="left" ></div>
+    <input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+    <button onclick="sort_by_name()">sort by name</button>
+    <button onclick="sort_by_location()">sort by location</button>
+    <button onclick="sort_by_fop()">sort by field of practice</button>
+    <ul id="myMenu">
+        <!-- יש אפשרות להוסיף בקישור לפרופיל האישי של הרופא -->     
+    </ul>
+
+<script>
+function myFunction() 
+{
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("mySearch");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myMenu");
+  li = ul.getElementsByTagName("li");
+  for (i = 0; i < li.length; i++) 
+  {
+    a = li[i].getElementsByTagName("a")[0];
+    if (a.innerHTML.toUpperCase().indexOf(filter) > -1) 
+    {
+      li[i].style.display = "";
+    } 
+    else 
+    {
+      li[i].style.display = "none";
+    }
+  }
+}
+async function getDoctors(){
+ const data = await  fetch('https://thehealthcare.herokuapp.com/api/doctors')
+ const result = await data.json()
+//  console.log(result)
+return result
+}
+
+async function generateDoctorsList()
+{
+  const doctors_list = document.getElementById('myMenu')     // Append <li> to <ul> with id="myList"
+  const {doctors} = await getDoctors() 
+  let i=0
+  doctors.forEach(doctor => 
+  {
+    doctors_list.innerHTML += `<li><a  href="appointment_calendar.html">Name: ${doctors[i].fullName}  <br> Field of practice: ${doctors[i].fieldOfPractice}<br> Activity by days and hours: ${doctors[i].activityDaysAndHours}<br>Email: ${doctors[i].email} <br>Location:${doctors[i].location1} <a href="user_reviews.html">watch reviews</a> </details></a></li>`
+    i++;
+  });
+}
+generateDoctorsList()
+
+async function sort_by_name()
+{
+  const doctors_list = document.getElementById('myMenu')     // Append <li> to <ul> with id="myList"
+  const {doctors} = await getDoctors() 
+   let i=0
+   doctors.forEach(doctor => 
+  {
+    doctors_list.innerHTML -= ``
+    i++;
+  });
+   doctors.sort(function(a,b)
+   {
+     console.log(a.fullName)
+  var nameA = a.fullName.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.fullName.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+  // names must be equal
+  return 0;
+});    
+  i=0;
+  console.log(doctors);
+  doctors.forEach(doctor => 
+  {
+    doctors_list.innerHTML += `<li><a  href="appointment_calendar.html">Name: ${doctors[i].fullName}  <br> Field of practice: ${doctors[i].fieldOfPractice}<br> Activity by days and hours: ${doctors[i].activityDaysAndHours}<br>Email: ${doctors[i].email} <br>Location:${doctors[i].location1}<br><a href="user_reviews.html">watch reviews</a></details></a></li>`
+    i++;
+  });
+}
+
+async function sort_by_location()
+{
+  const doctors_list = document.getElementById('myMenu')     // Append <li> to <ul> with id="myList"
+  const {doctors} = await getDoctors() 
+   let i=0
+   doctors.forEach(doctor => 
+  {
+    doctors_list.innerHTML -= ``
+    i++;
+  });
+   doctors.sort(function(a,b)
+   {
+     console.log(a.location1)
+  var nameA = a.location1.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.location1.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+  // names must be equal
+  return 0;
+});    
+  i=0;
+  console.log(doctors);
+  doctors.forEach(doctor => 
+  {
+    doctors_list.innerHTML += `<li><a  href="appointment_calendar.html">Name: ${doctors[i].fullName}  <br> Field of practice: ${doctors[i].fieldOfPractice}<br> Activity by days and hours: ${doctors[i].activityDaysAndHours}<br>Email: ${doctors[i].email} <br>Location:${doctors[i].location1}<br><a href="user_reviews.html">watch reviews</a></details></a></li>`
+    i++;
+  });
+}
+
+async function sort_by_fop()
+{
+  const doctors_list = document.getElementById('myMenu')     // Append <li> to <ul> with id="myList"
+  const {doctors} = await getDoctors() 
+   let i=0
+   doctors.forEach(doctor => 
+  {
+    doctors_list.innerHTML -= ``
+    i++;
+  });
+   doctors.sort(function(a,b)
+   {
+     console.log(a.location1)
+  var nameA = a.fieldOfPractice.toUpperCase(); // ignore upper and lowercase
+  var nameB = b.fieldOfPractice.toUpperCase(); // ignore upper and lowercase
+  if (nameA < nameB) {
+    return -1;
+  }
+  if (nameA > nameB) {
+    return 1;
+  }
+  // names must be equal
+  return 0;
+});    
+  i=0;
+  console.log(doctors);
+  doctors.forEach(doctor => 
+  {
+    doctors_list.innerHTML += `<li><a  href="appointment_calendar.html">Name: ${doctors[i].fullName}  <br> Field of practice: ${doctors[i].fieldOfPractice}<br> Activity by days and hours: ${doctors[i].activityDaysAndHours}<br>Email: ${doctors[i].email} <br>Location:${doctors[i].location1}<br><a href="user_reviews.html">watch reviews</a></details></a></li>`
+    i++;
+  });
+}
+
+
+</script>
+
+</body>
+</html>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>

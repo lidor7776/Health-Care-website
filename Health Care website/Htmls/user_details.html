@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        body{
+            background-image: url(b.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+    </style>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="user_profile.html">Back to my profile</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        </div>
+      </nav>
+</head>
+<body class="bg-light">
+    <div class="container">
+      <main>  
+        <div class="row g-5">
+          <div class="col-md-5 col-lg-4 order-md-last">
+              
+          </div>
+          <div class="col-md-7 col-lg-8">
+            <form class="needs-validation" novalidate="">
+              <div class="row g-3">
+                <div class="col-12">
+                    <label for="id" class="form-label" style="font-size: large; font-weight: bold;"> My Full Name :</label>
+                    <div class="input-group has-validation">
+                        <label for="id" class="form-label">User 1234#</label>
+                    <div class="invalid-feedback">
+                      </div>
+                    </div>
+    
+                <div class="col-12">
+                  <label for="id" class="form-label" style="font-size: large; font-weight: bold;"> My ID :</label>
+                  <div class="input-group has-validation">
+                    <label for="id" class="form-label">555555555</label>
+                  <div class="invalid-feedback">
+                    </div>
+                  </div>
+                </div>
+    
+                <div class="col-12">
+                  <label for="email" class="form-label" style="font-size: large; font-weight: bold;"> My Email :</label>
+                  <div class="input-group has-validation">
+                  <label for="email" class="form-label"> you@example.com </label>
+                </div>
+                  <div class="invalid-feedback">
+                  </div>
+                </div>
+                
+                  
+                    <div class="col-12">
+                        <label for="address2" class="form-label" style="font-size: large; font-weight: bold;">insurence type</label>
+                        <div>
+                        <label for="address2" class="form-label"> Hello i am a doctor </label>
+                    </div>
+                      </div>
+                      <div class="col-12">
+                        <label for="address2" class="form-label" style="font-size: large; font-weight: bold;">Phone number</label>
+                        <div>
+                        <label for="address2" class="form-label"> 054-XXXXXXX </label>
+                    </div>
+                      </div>
+                
+
+              </div>    
+
+              <a onclick="move_doc_search()" class="btn btn-primary my-2">Send information to</a>
+          </div></form>
+        </div>
+      </div></main>  
+    
+<script>
+document.getElementById('submit-btn').addEventListener("click", e=>{
+e.preventDefault()
+})
+async function submitButtonClick()
+{
+    const doctorID = document.getElementById('id').value
+    const fullName = document.getElementById('fullname').value
+    const fieldOfPractice = document.getElementById('fop').value
+    const activityDaysAndHours = document.getElementById('adh').value
+    const location1 = document.getElementById('location1').value
+    const shortDescription = document.getElementById('shortdescription').value
+    const email = document.getElementById('e-mail').value
+    const pass = document.getElementById('pass').value
+    const newDoctorObj={doctorID,fullName,fieldOfPractice,activityDaysAndHours,location1,shortDescription,email,pass}
+    console.log(newDoctorObj)
+    console.log(fullName);
+        const rawResponse = await fetch('http://localhost:3000/doctor_signup', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newDoctorObj)
+        });
+        const content = await rawResponse.json();
+        
+    ;
+}
+function move_doc_search()
+    {
+      window.location="doctors_search.html"
+    }
+</script>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script></div></body>

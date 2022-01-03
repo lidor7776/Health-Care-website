@@ -1,0 +1,103 @@
+<html lang="en" >
+
+<head>
+    <style>
+        body{
+            background-image: url(b.jpg);
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+        }
+    </style>
+    <p>
+      <button onclick="protectedRoute()" class="btn btn-primary my-2"
+        >Back to home page</button
+      >
+    </p>
+  <meta charset="UTF-8">
+  <title>COVID-19 Realtime Update | Webdevtrick.com</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="style.css">
+ 
+</head>
+<body>
+ 
+<div class="preloader">
+  <div class="preloader__content">
+    <div class="preloader__loader"></div>
+    <div class="preloader__txt">Loading ...</div>
+  </div>
+</div>
+<div class="container">
+  <div class="statistics">
+    <div class="global">
+      <div class="global__title">
+        corona virus update
+      </div>
+      <div class="global__cases">
+        <h1></h1>
+        <h2>Total Cases</h2>
+      </div>
+      <div class="global__deaths">
+        <h1></h1>
+        <h2>Total Deaths</h2>
+      </div>
+      <div class="global__recovered">
+        <h1></h1>
+        <h2>Total Recovered</h2>
+      </div>
+    </div>
+    <input type="text" id="search" name="country" placeholder="Search Countries">
+    <select class="custom-select" id="select" onchange="changeOrder()">
+      <option selected="" disabled="">Sort By</option>
+      <option value="cases">Total Cases</option>
+      <option value="deaths">Total Deaths</option>
+      <option value="recovered">Total Recoveries</option>
+    </select>
+    <table class="table">
+      <thead>
+        <tr >        
+          <th>Country</th>
+          <th>Cases</th>
+          <th>Deaths</th>
+          <th>Recovered</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  <div class="arrow">
+    <div class="arrow__up">
+    </div>
+    <div class="arrow__down">
+    </div>
+  </div>
+</div>
+<script>
+    async function protectedRoute(site,fileName){
+      const token = await localStorage.getItem('token')
+      if(!token) return window.location.href = "home_page.html";
+      return window.location.href = "home_page_logout.html";
+      const response = await fetch(`http://localhost:3000/${site}`, {
+                  method: 'GET',
+                  headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                      'x-auth-token': token
+                  },
+              });
+            const {message} = await response.json();
+              if(message) return window.location = `http://localhost:5500/Htmls/${fileName}`
+    }
+
+</script>
+ 
+  <script src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/iamdustan-smoothscroll/0.4.0/smoothscroll.min.js'></script>
+<script  src="function.js"></script>
+ 
+</body>
+</html>

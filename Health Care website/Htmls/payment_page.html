@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+    body {
+      background-image: url(b.jpg);
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: 100% 100%;
+    }
+  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Optimal Web : Contact Form With JS</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <!-- contact1 -->
+  <section class="w3l-simple-contact-form1"></section>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="insurance_types.html">Go back to insurance</a>
+    <div class="contact-form section-gap">
+      <div class="wrapper">
+        <div class="text-center">
+        <h1 style="font-size: 40px; " >Payment page</h1>
+      </div>
+        <div class="contact-form" style="max-width: 450px; margin: 0 auto;">
+          <div class="form-mid">
+            <form action="javascript:sendmail()" method="post">
+              <div class="field">
+                <input type="text" class="form-control" name="Name" id="Name" placeholder="Owner card name" required="">
+              </div>
+              <div class="field">
+                <input type="number" class="form-control" name="id" id="id" placeholder="ID" required="">
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" name="departure" id="departure" placeholder="Departure date  00/00/00" required="">
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" name="Return" id="Return" placeholder="Return date  00/00/00" required="">
+              </div>
+              <div class="field">
+                <input type="number" class="form-control" name="credit" id="credit" placeholder="Credit card number" required="">
+              </div>
+              <div class="field">
+                <input type="text" class="form-control" name="exp" id="exp" placeholder="Expiration  00/00" required="">
+              </div>
+              <div class="field">
+                <input type="number" class="form-control"  maxlength = "3" name="csc" id="csc" placeholder="CSC" required="">
+              </div>
+              <div class="field">
+                <input type="email" class="form-control" name="Sender" id="Sender" placeholder="you@example.com"
+                  required="">
+              </div>
+              <!-- <div class="field">
+                <input type="text" class="form-control" name="Subject" id="Subject" placeholder="Subject"
+                  required="">
+              </div> -->
+              <!-- <textarea name="Message" class="form-control" id="Message" placeholder="Message"
+                required=""></textarea> -->
+              <button type="submit" class="btn btn-contact">Submit</button>
+              <!-- <input type="button" class="btn btn-contact" onclick="sendmail();"  value="Send Message"> -->
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /contact1 -->
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+ 
+<script>  
+
+     function sendmail(){
+    
+			var name = $('#Name').val();
+			var email = $('#Sender').val();
+			var subject = $('#Subject').val();
+      var message = $('#Message').val();
+
+			// var body = $('#body').val();
+
+			var Body='Name: '+name+'<br>Email: '+email+'<br>Subject: '+subject+'<br>Message: '+message;
+			//console.log(name, phone, email, message);
+
+			Email.send({
+        SecureToken:"fbf31702-bb7f-4a4e-9c1c-4ccf17ee777f",
+				To: email,
+				From: "thehealthcaresprint@gmail.com",
+				Subject: "New message from thehealthcare",
+				Body: "Thank you for choosing us! <br> Your receipt number is:"+ Math.floor(Math.random()*9999999)
+			}).then(
+				message =>{
+					//console.log (message);
+					if(message=='OK'){
+					alert('Your mail has been sent, Thank you for purchasing.');
+					}
+					else{
+						console.error (message);
+						alert('There is error at sending message. ')
+						
+					}
+
+				}
+			);
+
+
+
+		}
+
+
+    </script>
+ </script>
+</body>
+
+</html>
